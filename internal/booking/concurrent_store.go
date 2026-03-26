@@ -12,6 +12,7 @@ func NewConcurrentStore() *ConcurrentStore {
 		bookings: map[string]Booking{},
 	}
 }
+
 func (s *ConcurrentStore) Book(b Booking) error {
 
 	s.Lock()

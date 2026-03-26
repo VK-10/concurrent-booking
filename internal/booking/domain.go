@@ -1,6 +1,7 @@
 package booking
 
 import (
+	"context"
 	"errors"
 	"time"
 )
@@ -17,10 +18,13 @@ type Booking struct {
 	SeatID    string
 	UserID    string
 	Status    string
-	ExpiredAt time.Time
+	ExpiresAt time.Time
 }
 
 type BookingStore interface {
-	Book(b Booking) error
+	Book(b Booking) (Booking, error)
 	ListBookings(movieID string) []Booking
+
+	Confirm(ctx context.Context, sessionID string, userID string) (Booking, error)
+	Release(ctx context.Context, sessionID string, userID string) error
 }
